@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: web-service
+  labels:
+    app: web-service
+spec:
+  selector:
+    app: myweb
+  type: NodePort
+  ports:
+  - nodePort: 30251
+    port: 80
+    targetPort: 80
