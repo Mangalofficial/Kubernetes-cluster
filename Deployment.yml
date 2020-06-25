@@ -1,0 +1,33 @@
+---
+apiVersion: apps/v1 
+kind: Deployment
+metadata:
+  name: myweb
+  labels:
+    app: myweb
+spec:
+  selector:
+    matchLabels:
+      app: myweb
+      tier: frontend
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: myweb
+        tier: frontend
+    spec:
+      containers:
+      - image: httpd:latest
+        name: httpd-container
+        ports:
+        - containerPort: 80
+          name: httpd 
+        volumeMounts:
+        - name: httpd-volume
+          mountPath: /usr/local/apache2/htdocs
+      volumes:
+      - name: httpd-volume
+        persistentVolumeClaim:
+          claimName: httpd-pvc
